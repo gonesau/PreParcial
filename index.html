@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="light">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>PerParcial — Gestor de Tareas</title>
+  <link rel="stylesheet" href="styles.css" />
+  <meta name="color-scheme" content="light dark" />
+</head>
+<body>
+  <header class="container header">
+    <div class="header__titles">
+      <h1>Gestor de Tareas</h1>
+      <p class="subtitle">Gestión de tareas.</p>
+    </div>
+    <div class="header__actions">
+      <button id="themeToggle" class="btn btn--ghost" aria-pressed="false" title="Alternar tema">🌗 Tema</button>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- Formulario de alta -->
+    <section aria-labelledby="form-title" class="card">
+      <h2 id="form-title" class="sr-only">Añadir nueva tarea</h2>
+      <form id="taskForm" autocomplete="off" novalidate>
+        <label for="taskInput" class="sr-only">Descripción de la tarea</label>
+        <input id="taskInput" name="task" type="text" placeholder="¿Qué hay por hacer?" maxlength="160" required />
+
+<div class="date-wrapper">
+  <input id="dueInput" name="due" type="datetime-local" />
+  <button type="button" id="openCalendarBtn" title="Seleccionar fecha">📅</button>
+</div>
+
+
+
+        <button type="submit" class="btn">Agregar</button>
+        <p id="formError" class="form-error" role="alert" aria-live="polite"></p>
+      </form>
+    </section>
+
+    <!-- Controles: filtros, orden, contador -->
+    <section class="controls card" aria-label="Controles de vista">
+      <div class="filters" role="tablist" aria-label="Filtros de tareas">
+        <button class="chip is-active" data-filter="all" role="tab" aria-selected="true">Todas</button>
+        <button class="chip" data-filter="active" role="tab" aria-selected="false">Pendientes</button>
+        <button class="chip" data-filter="completed" role="tab" aria-selected="false">Completadas</button>
+      </div>
+
+      <div class="sort">
+        <label for="sortSelect">Ordenar por:</label>
+        <select id="sortSelect">
+          <option value="created_desc">Fecha de creación (recientes primero)</option>
+          <option value="created_asc">Fecha de creación (antiguas primero)</option>
+          <option value="alpha_asc">Alfabético (A→Z)</option>
+          <option value="alpha_desc">Alfabético (Z→A)</option>
+          <option value="due_asc">Fecha límite (próximas primero)</option>
+          <option value="due_desc">Fecha límite (lejanas primero)</option>
+        </select>
+      </div>
+
+      <div class="counter" aria-live="polite">
+        <span id="pendingCount">0</span> pendientes
+      </div>
+    </section>
+
+    <!-- Lista de tareas -->
+    <section class="card" aria-labelledby="list-title">
+      <h2 id="list-title" class="sr-only">Lista de tareas</h2>
+      <ul id="taskList" class="task-list" aria-live="polite"></ul>
+      <div id="emptyState" class="empty">Sin tareas por ahora.</div>
+    </section>
+  </main>
+
+  <!-- Zona de notificaciones in-app (toasts) -->
+  <div id="toastRegion" class="toast-region" aria-live="assertive" aria-atomic="true"></div>
+
+  <footer class="container footer">
+    <small>Made by Omar Fuentes - FG100222</small>
+  </footer>
+
+  <!-- Template de ítem -->
+  <template id="taskItemTemplate">
+    <li class="task-item" data-id="">
+      <label class="task-item__check">
+        <input type="checkbox" class="task-toggle" aria-label="Marcar como completada" />
+        <span class="custom-checkbox" aria-hidden="true"></span>
+      </label>
+      <div class="task-item__content">
+        <div class="task-title" tabindex="0"></div>
+        <div class="task-meta">
+          <time class="task-created"></time>
+          <span class="task-due"></span>
+        </div>
+      </div>
+      <div class="task-item__actions">
+        <button class="btn btn--ghost btn--sm edit-btn" title="Editar">✏️</button>
+        <button class="btn btn--ghost btn--sm delete-btn" title="Eliminar">🗑️</button>
+      </div>
+    </li>
+  </template>
+
+  <script src="app.js" defer></script>
+</body>
+</html>
